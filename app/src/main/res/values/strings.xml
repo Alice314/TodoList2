@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">TodoList</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_search">Search</string>
+    <string name="action_notify">Setting</string>
+
+    <string name="four">"优先级4"</string>
+    <string name="three">"优先级3"</string>
+    <string name="two">"优先级2"</string>
+    <string name="one">"优先级1"</string>
+</resources>

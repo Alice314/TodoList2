@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="500dp"
+    android:minHeight="250dp">
+    <TextView
+        android:id="@+id/four"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="优先级4"
+        android:textColor="@color/grey"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="100dp"
+        android:textSize="32dp"
+        android:clickable="true"/>
+    <include layout="@layout/subline_dialog"/>
+    <TextView
+        android:id="@+id/three"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="优先级3"
+        android:textColor="@color/grey"
+        android:textSize="32dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="100dp"
+        android:clickable="true"/>
+    <include layout="@layout/subline_dialog"/>
+    <TextView
+        android:id="@+id/two"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="优先级2"
+        android:textColor="@color/grey"
+        android:textSize="32dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="100dp"
+        android:clickable="true"/>
+    <include layout="@layout/subline_dialog"/>
+    <TextView
+        android:id="@+id/one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="优先级1"
+        android:textColor="@color/grey"
+        android:textSize="32dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="100dp"
+        android:clickable="true"/>
+
+</LinearLayout>

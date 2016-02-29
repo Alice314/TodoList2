@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+    <item android:id="@+id/action_search"
+        android:title="search"
+        android:orderInCategory="90"
+        android:icon="@mipmap/ic8"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_notify"
+        android:title="notify"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
+</menu>

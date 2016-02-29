@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="ic_shoujiangxiang" type="mipmap">@mipmap/ic_shoujianxiang</item>
+    <item name="ic_jin" type="mipmap">@mipmap/ic_jin</item>
+    <item name="ic700" type="mipmap">@mipmap/ic700</item>
+    <item name="ic_xiangmu" type="mipmap">@mipmap/ic_xiangmu</item>
+    <item name="ic_biaoqian" type="mipmap">@mipmap/ic_biaoqian</item>
+    <item name="ic_guolvqi" type="mipmap">@mipmap/ic_guolvqi</item>
+</resources>

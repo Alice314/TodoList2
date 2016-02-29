@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_shoujianxiang"
+            android:icon="@mipmap/ic_shoujianxiang"
+            android:title="收件箱" />
+        <item
+            android:id="@+id/nav_jin"
+            android:icon="@mipmap/ic_jin"
+            android:title="今天" />
+        <item
+            android:id="@+id/nav_seven"
+            android:icon="@mipmap/ic700"
+            android:title="未来7天" />
+        <item
+            android:id="@+id/nav_xiangmu"
+            android:icon="@mipmap/ic_xiangmu"
+            android:title="项目" />
+        <item
+            android:id="@+id/nav_biaoqian"
+            android:icon="@mipmap/ic_biaoqian"
+            android:title="标签" />
+        <item
+            android:id="@+id/nav_guolvqi"
+            android:icon="@mipmap/ic_guolvqi"
+            android:title="过滤器" />
+
+        <item android:title="notitle"
+            android:id="@+id/selection">
+            <menu>
+                <item
+                    android:id="@+id/nav_shezhi"
+                    android:icon="@mipmap/ic_shezhi"
+                    android:title="设置"/>
+            </menu>
+            <!--菜单元素放在group之下-->
+        </item>
+    </group>
+</menu>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="item_name">
+        <item>到期日期</item>
+        <item>优先级</item>
+        <item>标签</item>
+        <item>次级任务</item>
+        <item>评论</item>
+        <item>提醒</item>
+    </string-array>
+    <integer-array name="item_image">
+        <item>@mipmap/ic_rili</item>
+        <item>@mipmap/ic_hongqi</item>
+        <item>@mipmap/ic_biaoqian</item>
+        <item>@mipmap/ic_santiaoxian</item>
+        <item>@mipmap/ic_pinglun</item>
+        <item>@mipmap/ic_tixing</item>
+    </integer-array>
+</resources>
