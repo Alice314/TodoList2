@@ -6,11 +6,11 @@
         android:id="@+id/text_view"
         android:layout_width="match_parent"
         android:layout_height="15dp"
-        android:text="#0a0909"/>
-    <TextView
-        android:id="@+id/text_view1"
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:text="#0a0909"/>
+        android:textColor="#0a0909"/>
+    <!--<TextView-->
+        <!--android:id="@+id/text_view1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="15dp"-->
+        <!--android:textColor="#0a0909"/>-->
 
 </FrameLayout>

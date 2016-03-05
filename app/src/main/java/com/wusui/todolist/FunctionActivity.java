@@ -89,7 +89,7 @@ public class FunctionActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.example) { //noinspection SimplifiableIfStatement
+        if (id == R.id.example) {
             return true;
         }
 

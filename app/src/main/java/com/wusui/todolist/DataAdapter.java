@@ -17,7 +17,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder>{
     private Context mContext;
     private static List<String>mDatas;
 
-
+    // 没被调用啊
     public DataAdapter(Context context,List<String>mDatas){
         mContext = context;
         this.mDatas = mDatas;
@@ -53,7 +53,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder>{
 
     @Override
     public int getItemCount() {
-        return mDatas.size();
+        return mDatas.size();//所以这里出了空指针
     }
 
     public interface OnItemClickListener{
@@ -64,7 +64,5 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder>{
     public void setmOnItemClickListener(OnItemClickListener mOnItemClickListener){
         this.mOnItemClickListener = mOnItemClickListener;
     }
-
-
 
 }

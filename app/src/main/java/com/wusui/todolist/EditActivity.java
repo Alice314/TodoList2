@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,21 +31,24 @@ import java.util.List;
  * * Created by fg on 2016/2/26.
  */
 public class EditActivity extends AppCompatActivity  {
-    private static RecyclerView mRecyclerView;
-    private List<String>mDatas;
-    private DataAdapter mAapter;
+    private RecyclerView mRecyclerView;
+    private List<String>mDatas = new ArrayList<>();
+    private DataAdapter mAdapter;
     private EditText editText;
     private TextView textView;
     private EditDatabaseHelper dbHelper;
     private SQLiteDatabase db;
     private GregorianCalendar date;
     private String priority;
-    public ItemTouchHelper.Callback mCallback;
+    private ItemTouchHelper.Callback mCallback;
+    public static int fromPosition;
+    public static int toPosition;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
-        initData();
         editText = (EditText)findViewById(R.id.edit_view);
         textView = (TextView)findViewById(R.id.text_view);
 
@@ -57,12 +61,13 @@ public class EditActivity extends AppCompatActivity  {
     private void initView(){
         mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(mAapter = new DataAdapter(EditActivity.this, mDatas));
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setAdapter(mAdapter = new DataAdapter(EditActivity.this, mDatas));
         ItemTouchHelper.Callback mCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN,ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                int fromPosition = viewHolder.getAdapterPosition();
-                int toPosition = target.getAdapterPosition();
+                fromPosition= viewHolder.getAdapterPosition();
+                toPosition = target.getAdapterPosition();
                 if (fromPosition < toPosition){
                     for (int i = fromPosition;i < toPosition;i++){
                         Collections.swap(mDatas,i,i+1);
@@ -72,22 +77,24 @@ public class EditActivity extends AppCompatActivity  {
                         Collections.swap(mDatas,i,i-1);
                     }
                 }
-                mAapter.notifyItemChanged(fromPosition,toPosition);
+                mAdapter.notifyItemChanged(fromPosition, toPosition);
+
                 return true;
             }
-
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
+
+                db.execSQL("DELETE FROM User where content = ?", new Object[]{mDatas.get(position)});
+                db.execSQL("DELETE FROM User where date = ?", new Object[]{mDatas.get(position)});
                 mDatas.remove(position);
-                mAapter.notifyItemRemoved(position);
+                mAdapter.notifyItemRemoved(position);
             }
-
-
-
         };
+
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(mCallback);
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
+
         ImageButton button = (ImageButton)findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,22 +110,24 @@ public class EditActivity extends AppCompatActivity  {
 
 
                 db.execSQL("INSERT INTO User(content) VALUES(?)", new Object[]{editText.getText().toString()});
-                db.execSQL("INSERT INTO User(date) VALUES(?)", new Object[]{priority});
+                db.execSQL("INSERT INTO User(date) VALUES(?)", new Object[]{now});
 
-                mDatas.add(editText.getText().toString());
                 mDatas.add(now);
+                mDatas.add(editText.getText().toString());
 
-                mAapter.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
+
             }
         });
         try {
             Cursor cursor = db.rawQuery("select * from user",null);
             if (cursor.moveToFirst()){
                 do {
-                    String content = cursor.getString(cursor.getColumnIndex("content"));
-                    mDatas.add(content);
                     String now = cursor.getString(cursor.getColumnIndex("date"));
                     mDatas.add(now);
+                    String content = cursor.getString(cursor.getColumnIndex("content"));
+                    mDatas.add(content);
+
                 }
                 while (cursor.moveToNext());
             }
@@ -126,10 +135,13 @@ public class EditActivity extends AppCompatActivity  {
         }catch (Exception e){
             e.printStackTrace();
         }
-        mAapter.notifyDataSetChanged();
+
+        mAdapter.notifyDataSetChanged();
+
     }
 
-    public void initToolBar(){
+
+    private void initToolBar(){
         Toolbar editToolBar = (Toolbar)findViewById(R.id.edit_toolbar);
 
         setSupportActionBar(editToolBar);
@@ -143,25 +155,18 @@ public class EditActivity extends AppCompatActivity  {
         });
     }
 
-    protected void initData(){
-        mDatas = new ArrayList<>();
-    }
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_edit,menu);
         return true;
     }
     public boolean onOptionsItemSelected(MenuItem menuItem){
         int id = menuItem.getItemId();
-        if (id == R.id.action_delete){
-            db.execSQL("DELETE FROM User where content = ?",new Object[]{});
-        }
+
         if (id == R.id.action_more){
             Intent intent = new Intent(EditActivity.this,FunctionActivity.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(menuItem);
     }
-
-
 
 }
