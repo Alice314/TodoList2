@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class EditActivity extends AppCompatActivity  {
     private RecyclerView mRecyclerView;
-    private List<String>mDatas = new ArrayList<>();
+    private ArrayList<String>mDatas = new ArrayList<>();
     private DataAdapter mAdapter;
     private EditText editText;
     private TextView textView;
@@ -43,6 +43,8 @@ public class EditActivity extends AppCompatActivity  {
     private ItemTouchHelper.Callback mCallback;
     public static int fromPosition;
     public static int toPosition;
+    public static final int RESULT_UN_EDIT = 0;
+    public static final int RESULT_EDIT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -57,6 +59,7 @@ public class EditActivity extends AppCompatActivity  {
 
         initToolBar();
         initView();
+        setResult(RESULT_UN_EDIT);
     }
     private void initView(){
         mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
@@ -80,6 +83,7 @@ public class EditActivity extends AppCompatActivity  {
                 mAdapter.notifyItemChanged(fromPosition, toPosition);
 
                 return true;
+
             }
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
@@ -117,6 +121,11 @@ public class EditActivity extends AppCompatActivity  {
 
                 mAdapter.notifyDataSetChanged();
 
+                Intent intent = new Intent();
+                intent.putExtra("content",editText.getText().toString());
+                intent.putExtra("now",now);
+                setResult(RESULT_EDIT, intent);
+                finish();
             }
         });
         try {
@@ -131,6 +140,8 @@ public class EditActivity extends AppCompatActivity  {
                 }
                 while (cursor.moveToNext());
             }
+
+
             cursor.close();
         }catch (Exception e){
             e.printStackTrace();
@@ -168,5 +179,7 @@ public class EditActivity extends AppCompatActivity  {
         }
         return super.onOptionsItemSelected(menuItem);
     }
+
+
 
 }

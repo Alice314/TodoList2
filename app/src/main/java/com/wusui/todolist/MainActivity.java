@@ -20,13 +20,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 /**
- * 你现在是要干嘛啊……把EditActivity/里面的数据传到Main
  * Created by fg on 2016/2/26.
  */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private EditDatabaseHelper dbHelper;
     private SQLiteDatabase db;
 
+    public static final int REQUEST_EDIT = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -52,32 +53,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,EditActivity.class);
-                startActivity(intent);
+//                startActivity(intent);
+                startActivityForResult(intent,REQUEST_EDIT);
             }
         });
     }
 
-    private void initData() {
+    public void initData() {
         dbHelper = new EditDatabaseHelper(this,"Usb.db",null,1);
         db = dbHelper.getReadableDatabase();
+
         try {
             Cursor cursor = db.rawQuery("select * from user",null);
             if (cursor.moveToFirst()){
                 do {
+                    String now = cursor.getString(cursor.getColumnIndex("date"));
+                    mDatas.add(now);
                     String content = cursor.getString(cursor.getColumnIndex("content"));
                     mDatas.add(content);
-                    String now = cursor.getString(cursor.getColumnIndex("date"));
-                    Log.d("MainActivity.class", "感谢上帝，这里没有bug!!!!!!!!");
-                    mDatas.add(now);
-
                 }
                 while (cursor.moveToNext());
             }
+
             cursor.close();
         }catch (Exception e){
             e.printStackTrace();
         }
-
+        finally {
+            db.close();
+        }
     }
 
     private void initToolBar(){
@@ -100,7 +104,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 int id = item.getItemId();
-
+                if (id == R.id.action_search){
+                    
+                }
                 if (id == R.id.action_notify) {
                     NavigationView RightView = (NavigationView) findViewById(R.id.nav_view_right);
                 }
@@ -111,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initView(){
         mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view_main);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         mRecyclerView.setAdapter(mAdapter = new DataAdapter(MainActivity.this, mDatas));//但你在这个时候就把data给了adapter
         // 你妄想在这里找一遍数据
         mAdapter.notifyDataSetChanged();
@@ -176,5 +183,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode,int resultCode,Intent data){
+        switch (requestCode){
+            case REQUEST_EDIT:
+                if (resultCode == EditActivity.RESULT_EDIT){
+                    mDatas.add(data.getStringExtra("content"));
+                    mAdapter.notifyDataSetChanged();
+                }
+                break;
+        }
     }
 }

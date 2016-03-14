@@ -49,6 +49,8 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder>{
                 }
             });
         }
+        Data data = new Data(mDatas.get(position));
+        holder.tv.setText(data.getContent());
     }
 
     @Override
